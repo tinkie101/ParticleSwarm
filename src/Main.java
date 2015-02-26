@@ -7,7 +7,6 @@ import Problems.Problem;
 public class Main {
 
     public static void main(String[] args) {
-
         try {
             Problem problem = new BasicProblem();
             boolean minimisation = false;
