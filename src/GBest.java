@@ -7,6 +7,7 @@ public class GBest extends PSO {
 
     int gBest;
     boolean first = true;
+    StringBuilder stringBuilder = new StringBuilder();
 
     public GBest(boolean minimisation, Problem problem, int numParticles) throws Exception {
         //create PSO
@@ -31,6 +32,10 @@ public class GBest extends PSO {
 
     @Override
     public void runPSO() throws Exception {
+        stringBuilder.append("Starting PSO: \nConstraints: ");
+
+        double[][] constraints = problem.getConstraints();
+
         //TODO Stopping condition
         int count = 0;
         while (count < 1000) {
@@ -79,13 +84,15 @@ public class GBest extends PSO {
                 swarm[i].updatePosition();
             }
 
-            System.out.println("PSO run: " + count);
-            System.out.println("Best solution vector: " + swarm[gBest].toString() + "; Fitness: " + swarm[gBest].getPBestValue());
+            stringBuilder.append("PSO run: " + count + "\n");
+            stringBuilder.append("Best solution vector: " + swarm[gBest].toString() + "; Fitness: " + swarm[gBest].getPBestValue() + "\n");
             count++;
         }
 
-        System.out.println("PSO Finished");
-        System.out.println("Final Best solution vector: " + swarm[gBest].toString() + "; Fitness: " + swarm[gBest].getPBestValue());
+        stringBuilder.append("PSO Finished" + "\n");
+        stringBuilder.append("Final Best solution vector: " + swarm[gBest].toString() + "; Fitness: " + swarm[gBest].getPBestValue() + "\n");
+
+        FileHandler.writeFile("files/" + problem.getClass().toString() + ".txt", stringBuilder.toString());
     }
 
 
