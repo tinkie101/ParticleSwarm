@@ -9,6 +9,7 @@ public class GBest extends PSO {
     boolean first = true;
 
     public GBest(boolean minimisation, Problem problem, int numParticles) throws Exception {
+        //create PSO
         super(minimisation, problem, numParticles);
 
         //get initial gBest
@@ -67,8 +68,12 @@ public class GBest extends PSO {
             }
 
             for (int i = 0; i < numParticles; i++) {
+                //TODO Get better acceleration coefficients
+                double c1 = 2.0;
+                double c2 = 2.0;
+
                 //  3) Update particle velocity
-                swarm[i].updateVelocity(0.5d, 0.5d, swarm[gBest].getPBestPosition());
+                swarm[i].updateVelocity(c1, c2, swarm[gBest].getPBestPosition());
 
                 //  4) update particle position
                 swarm[i].updatePosition();
