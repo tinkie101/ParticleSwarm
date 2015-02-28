@@ -26,8 +26,7 @@ public class BasicProblem extends Problem {
             double x = solutionVector[0];
 
             //Calculate the result of the function when you plug in the variables
-            Double result = 30.0d + (25.0d * x) - (4.0d * Math.pow(x, 2.0d)) + (0.15d * Math.pow(x, 3.0d));
-            return result;
+            return 30.0d + (25.0d * x) - (4.0d * Math.pow(x, 2.0d)) + (0.15d * Math.pow(x, 3.0d));
         } else
             throw new Exception("Invalid input variables for problem.");
     }
