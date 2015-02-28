@@ -27,12 +27,12 @@ public class Rastrigin extends Problem {
     public double calculateFitness(double[] solutionVector) throws Exception {
         if (solutionVector.length == numDimensions) {
             //map to solution values to more mathematically readable variables
-            double x = solutionVector[0];
+            double[] x = solutionVector;
 
             Double result = 0.0d;
             //Calculate the result of the function when you plug in the variables
             for (int j = 0; j < Nx; j++) {
-                result += 10 + (Math.pow(solutionVector[j], 2.0d) - 10 * Math.cos(2.0d * Math.PI * solutionVector[j]));
+                result += (Math.pow(x[j], 2.0d) - 10 * Math.cos(2.0d * Math.PI * x[j])) + 10.0d;
             }
 
             return result;

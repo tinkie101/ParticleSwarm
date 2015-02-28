@@ -27,12 +27,12 @@ public class Schwefel extends Problem {
     public double calculateFitness(double[] solutionVector) throws Exception {
         if (solutionVector.length == numDimensions) {
             //map to solution values to more mathematically readable variables
-            double x = solutionVector[0];
+            double[] x = solutionVector;
 
             Double result = 0.0d;
             //Calculate the result of the function when you plug in the variables
             for (int j = 0; j < Nx; j++) {
-                result += solutionVector[j] * Math.sin(Math.sqrt(Math.abs(solutionVector[j]))) + (418.9829d * Nx);
+                result += x[j] * Math.sin(Math.sqrt(Math.abs(x[j]))) + (418.9829d * Nx);
             }
 
             return result;
