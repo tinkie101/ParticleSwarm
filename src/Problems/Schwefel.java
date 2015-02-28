@@ -3,18 +3,18 @@ package Problems;
 /**
  * Created by tinkie101 on 2015/02/25.
  */
-public class Quadric extends Problem {
+public class Schwefel extends Problem {
     private int Nx;
 
     //Hard code the problem function parameters
-    public Quadric(int Nx) {
+    public Schwefel(int Nx) {
         //Pass in the number of variables (dimensions) for this problem
         super(Nx);
         this.Nx = Nx;
 
         for (int i = 0; i < Nx; i++) {
-            constraints[i][0] = -100; //lower bounds
-            constraints[i][1] = 100;  //upper bounds
+            constraints[i][0] = -500; //lower bounds
+            constraints[i][1] = 500;  //upper bounds
         }
     }
 
@@ -32,9 +32,7 @@ public class Quadric extends Problem {
             Double result = 0.0d;
             //Calculate the result of the function when you plug in the variables
             for (int j = 0; j < Nx; j++) {
-                for (int i = 0; i < j; i++) {
-                    result += Math.pow(solutionVector[i], 2.0d);
-                }
+                result += solutionVector[j] * Math.sin(Math.sqrt(Math.abs(solutionVector[j]))) + (418.9829d * Nx);
             }
 
             return result;
