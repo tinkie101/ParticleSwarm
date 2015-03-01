@@ -34,7 +34,7 @@ public class GBest extends PSO {
     public void runPSO() throws Exception {
         stringBuilder.append("Starting PSO: \nConstraints: ");
 
-        double[][] constraints = problem.getConstraints();
+        Double[][] constraints = problem.getConstraints();
 
         //TODO Stopping condition
         int count = 0;
@@ -42,7 +42,7 @@ public class GBest extends PSO {
             //  1) set each particle's best pBest
             for (int i = 0; i < numParticles; i++) {
                 Particle particle = swarm[i];
-                double[] position = particle.getPosition();
+                Double[] position = particle.getPosition();
                 double newFitness = problem.calculateFitness(position);
                 double pBestFitness = particle.getPBestValue();
 
@@ -73,19 +73,16 @@ public class GBest extends PSO {
             }
 
             for (int i = 0; i < numParticles; i++) {
-                //TODO Get better acceleration coefficients
-                double c1 = 2.0;
-                double c2 = 2.0;
 
                 //  3) Update particle velocity
-                swarm[i].updateVelocity(c1, c2, swarm[gBest].getPBestPosition());
+                swarm[i].updateVelocity(swarm[gBest].getPBestPosition());
 
                 //  4) update particle position
                 swarm[i].updatePosition();
             }
 
             stringBuilder.append("PSO run: " + count + "\n");
-            stringBuilder.append("Best solution vector: " + swarm[gBest].toString() + "; Fitness: " + swarm[gBest].getPBestValue() + "\n");
+            stringBuilder.append("Best solution vector[" + gBest + "]: " + swarm[gBest].toString() + "; Fitness: " + swarm[gBest].getPBestValue() + "\n");
             count++;
         }
 
@@ -93,6 +90,7 @@ public class GBest extends PSO {
         stringBuilder.append("Final Best solution vector: " + swarm[gBest].toString() + "; Fitness: " + swarm[gBest].getPBestValue() + "\n");
 
         FileHandler.writeFile("files/" + problem.getClass().toString() + ".txt", stringBuilder.toString());
+//        System.out.print(stringBuilder.toString());
     }
 
 

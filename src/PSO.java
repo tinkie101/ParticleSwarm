@@ -14,7 +14,7 @@ abstract class PSO {
     //  1) initialize n-dimensional swarm
     public PSO(boolean minimisation, Problem problem, int numParticles) throws Exception {
         int numDimensions = problem.getNumDimensions();
-        double[][] constraints = problem.getConstraints();
+        Double[][] constraints = problem.getConstraints();
 
         if (numDimensions != constraints.length)
             throw new Exception("Invalid PSO Arguments");

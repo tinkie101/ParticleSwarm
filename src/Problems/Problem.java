@@ -4,19 +4,42 @@ package Problems;
  * Created by tinkie101 on 2015/02/25.
  */
 public abstract class Problem {
-    final int numDimensions;
+    protected final int numDimensions;
 
     //double[dimension][upper and lower bound value]
-    final double[][] constraints;
+    protected final Double[][] constraints;
 
-    public Problem(int numDimensions) {
+    protected final double c1 = 2.8;
+    protected final double c2 = 1.3;
+    protected final double Vmax;
+
+    public Problem(int numDimensions, double Vmax) {
         this.numDimensions = numDimensions;
-        constraints = new double[numDimensions][2];
+        constraints = new Double[numDimensions][2];
+        this.Vmax = Vmax / 2;
     }
 
-    public abstract double calculateFitness(double[] solutionVector) throws Exception;
+    //Abstract methods
+    public abstract double calculateFitness(Double[] solutionVector) throws Exception;
 
-    public abstract int getNumDimensions();
+    //Implemented Methods
+    public Double[][] getConstraints() {
+        return constraints;
+    }
 
-    public abstract double[][] getConstraints();
+    public int getNumDimensions() {
+        return numDimensions;
+    }
+
+    public double getVmax() {
+        return Vmax;
+    }
+
+    public double getC1() {
+        return c1;
+    }
+
+    public double getC2() {
+        return c2;
+    }
 }

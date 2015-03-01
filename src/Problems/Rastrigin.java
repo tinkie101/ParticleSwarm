@@ -8,26 +8,20 @@ public class Rastrigin extends Problem {
 
     //Hard code the problem function parameters
     public Rastrigin(int Nx) {
-        //Pass in the number of variables (dimensions) for this problem
-        super(Nx);
+        super(Nx, 2.56d);
         this.Nx = Nx;
 
         for (int i = 0; i < Nx; i++) {
-            constraints[i][0] = -5.12; //lower bounds
-            constraints[i][1] = 5.12;  //upper bounds
+            constraints[i][0] = -5.12d; //lower bounds
+            constraints[i][1] = 5.12d;  //upper bounds
         }
     }
 
     @Override
-    public double[][] getConstraints() {
-        return constraints;
-    }
-
-    @Override
-    public double calculateFitness(double[] solutionVector) throws Exception {
+    public double calculateFitness(Double[] solutionVector) throws Exception {
         if (solutionVector.length == numDimensions) {
             //map to solution values to more mathematically readable variables
-            double[] x = solutionVector;
+            Double[] x = solutionVector;
 
             Double result = 0.0d;
             //Calculate the result of the function when you plug in the variables
@@ -38,10 +32,5 @@ public class Rastrigin extends Problem {
             return result;
         } else
             throw new Exception("Invalid input variables for problem.");
-    }
-
-    @Override
-    public int getNumDimensions() {
-        return numDimensions;
     }
 }

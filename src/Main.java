@@ -10,27 +10,27 @@ public class Main {
             boolean minimisation = true;
 
             Problem problem = new BasicProblem();
-            PSO pso = new GBest(minimisation, problem, 20);
+            PSO pso = new GBest(minimisation, problem, 40);
             pso.runPSO();
 
             problem = new HyperEllipsoid(5);
-            pso = new GBest(minimisation, problem, 20);
+            pso = new GBest(minimisation, problem, 40);
             pso.runPSO();
 
             problem = new Quadric(5);
-            pso = new GBest(minimisation, problem, 20);
+            pso = new GBest(minimisation, problem, 40);
             pso.runPSO();
 
             problem = new Rastrigin(5);
-            pso = new GBest(minimisation, problem, 20);
+            pso = new GBest(minimisation, problem, 40);
             pso.runPSO();
 
             problem = new Schwefel(5);
-            pso = new GBest(minimisation, problem, 20);
+            pso = new GBest(minimisation, problem, 40);
             pso.runPSO();
 
             problem = new Spherical(5);
-            pso = new GBest(minimisation, problem, 20);
+            pso = new GBest(minimisation, problem, 40);
             pso.runPSO();
 
         } catch (Exception e) {

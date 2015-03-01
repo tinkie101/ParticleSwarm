@@ -5,35 +5,49 @@ import Problems.Problem;
  */
 public class Particle {
 
-    private double[] position;
-    private double[] velocity;
-    private double[] pBestPosition;
+    private Double[] position;
+    private Double[] velocity;
+    private Double[] pBestPosition;
     private double pBestValue;
+    private int numDimensions;
+    private Double[][] constraints;
+    private double Vmax;
+    private double c1, c2;
 
     public Particle(Problem problem) throws Exception {
-        int numDimensions = problem.getNumDimensions();
-        double[][] constraints = problem.getConstraints();
+
+        this.numDimensions = problem.getNumDimensions();
+        this.constraints = problem.getConstraints();
+        this.Vmax = problem.getVmax();
+        this.c1 = problem.getC1();
+        this.c2 = problem.getC2();
 
         //second length must be 2 (upper and lower bounds)
         if (constraints.length != numDimensions && constraints[0].length != 2)
             throw new Exception("Invalid particle constraints. (Must be [numDimensions][2])");
 
-        position = new double[numDimensions];
+        position = new Double[numDimensions];
+        pBestPosition = new Double[numDimensions];
         for (int i = 0; i < numDimensions; i++) {
-            position[i] = RandomGenerator.getInstance().getRandomRangedDoubleValue(constraints[i][0], constraints[i][1]);
+            double tempVal = RandomGenerator.getInstance().getRandomRangedDoubleValue(constraints[i][0], constraints[i][1]);
+            position[i] = tempVal;
+            pBestPosition[i] = tempVal;
         }
 
-        velocity = new double[numDimensions];
+        velocity = new Double[numDimensions];
         for (int i = 0; i < numDimensions; i++) {
             velocity[i] = 0.0d;
         }
 
-        pBestPosition = position;
+
         pBestValue = problem.calculateFitness(position);
+
     }
 
-    public void setPBestPosition(double[] pBest) {
-        this.pBestPosition = pBest;
+    public void setPBestPosition(Double[] pBest) {
+        for (int i = 0; i < pBest.length; i++) {
+            this.pBestPosition[i] = pBest[i];
+        }
     }
 
     public void setPBestValue(double pBest) {
@@ -44,25 +58,49 @@ public class Particle {
         return pBestValue;
     }
 
-    public double[] getPBestPosition() {
+    public Double[] getPBestPosition() {
         return pBestPosition;
     }
 
-    public double[] getPosition() {
+    public Double[] getPosition() {
         return position;
     }
 
-    public void updateVelocity(double c1, double c2, double[] gBest) throws Exception {
+    public void updateVelocity(Double[] gBest) throws Exception {
         for (int i = 0; i < velocity.length; i++) {
             double r1 = RandomGenerator.getInstance().getRandomDoubleValue();
             double r2 = RandomGenerator.getInstance().getRandomDoubleValue();
 
-//            System.out.println(gBest[i] + "; " + position[i]);
             velocity[i] = velocity[i] + c1 * r1 * (pBestPosition[i] - position[i]) + c2 * r2 * (gBest[i] - position[i]);
+
+            //TODO This is what the research is all about!!
+            if (Math.abs(velocity[i]) > Vmax) {
+//                /***Clamp to xMax*/
+//                velocity[i] = Vmax;
+//
+                /***Reset to 0.0d*/
+                velocity[i] = 0.0d;
+//
+//                /**Reset to random value*/
+//                velocity[i] = RandomGenerator.getInstance().getRandomRangedDoubleValue(-Vmax, Vmax);
+//
+//                /**Reset all to 0*/
+//                for (int v = 0; v < velocity.length; v++) {
+//                    velocity[v] = 0.0d;
+//
+//                }
+//                break;
+//
+//                /**Reset all to 0*/
+//                for (int v = 0; v < velocity.length; v++) {
+//                    velocity[v] = RandomGenerator.getInstance().getRandomRangedDoubleValue(-Vmax, Vmax);
+//                }
+//                break;
+            }
         }
     }
 
-    private double getDistance(double[] from, double[] to) throws Exception {
+    private double getDistance(Double[] from, Double[] to) throws Exception {
         if (from.length != to.length)
             throw new Exception("From and To must have the same Dimension!");
 
@@ -80,14 +118,13 @@ public class Particle {
         position = vectorAdd(position, velocity);
     }
 
-    private double[] vectorAdd(double[] first, double[] second) throws Exception {
+    private Double[] vectorAdd(Double[] first, Double[] second) throws Exception {
         if (first.length != second.length)
             throw new Exception("Vector addition must have the same dimensions");
 
-        double[] result = first;
-
+        Double[] result = new Double[first.length];
         for (int i = 0; i < first.length; i++) {
-            result[i] += second[i];
+            result[i] = first[i] + second[i];
         }
 
         return result;
@@ -98,13 +135,12 @@ public class Particle {
         String result = "[";
 
 
-        int count = 0;
-        for (double val : pBestPosition) {
-            count++;
-            if (count >= pBestPosition.length) {
-                result = result + val;
+        for (int i = 0; i < pBestPosition.length; i++) {
+            //TODO
+            if (i + 1 >= pBestPosition.length) {
+                result = result + pBestPosition[i] + ";" + position[i];
             } else {
-                result = result + val + ",";
+                result = result + pBestPosition[i] + ";" + position[i] + ",";
             }
         }
 

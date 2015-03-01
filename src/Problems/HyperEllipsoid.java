@@ -8,26 +8,20 @@ public class HyperEllipsoid extends Problem {
 
     //Hard code the problem function parameters
     public HyperEllipsoid(int Nx) {
-        //Pass in the number of variables (dimensions) for this problem
-        super(Nx);
+        super(Nx, 0.05d);
         this.Nx = Nx;
 
         for (int i = 0; i < Nx; i++) {
-            constraints[i][0] = -1; //lower bounds
-            constraints[i][1] = 1;  //upper bounds
+            constraints[i][0] = -1.0d; //lower bounds
+            constraints[i][1] = 1.0d;  //upper bounds
         }
     }
 
     @Override
-    public double[][] getConstraints() {
-        return constraints;
-    }
-
-    @Override
-    public double calculateFitness(double[] solutionVector) throws Exception {
+    public double calculateFitness(Double[] solutionVector) throws Exception {
         if (solutionVector.length == numDimensions) {
             //map to solution values to more mathematically readable variables
-            double[] x = solutionVector;
+            Double[] x = solutionVector;
 
             Double result = 0.0d;
             //Calculate the result of the function when you plug in the variables
@@ -38,10 +32,5 @@ public class HyperEllipsoid extends Problem {
             return result;
         } else
             throw new Exception("Invalid input variables for problem.");
-    }
-
-    @Override
-    public int getNumDimensions() {
-        return numDimensions;
     }
 }
