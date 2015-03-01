@@ -8,7 +8,7 @@ public class Rastrigin extends Problem {
 
     //Hard code the problem function parameters
     public Rastrigin(int Nx) {
-        super(Nx, 2.56d);
+        super(Nx, 5.12d);
         this.Nx = Nx;
 
         for (int i = 0; i < Nx; i++) {

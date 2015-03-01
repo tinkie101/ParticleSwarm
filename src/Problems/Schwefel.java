@@ -8,7 +8,7 @@ public class Schwefel extends Problem {
 
     //Hard code the problem function parameters
     public Schwefel(int Nx) {
-        super(Nx, 250.0d);
+        super(Nx, 500.0d);
         this.Nx = Nx;
 
         for (int i = 0; i < Nx; i++) {

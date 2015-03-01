@@ -7,7 +7,7 @@ public class BasicProblem extends Problem {
 
     //Hard code the problem function parameters
     public BasicProblem() {
-        super(1, 2.5d);
+        super(1, 10d);
 
         constraints[0][0] = 0.0d;
         constraints[0][1] = 20.0d;

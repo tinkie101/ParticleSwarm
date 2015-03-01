@@ -16,7 +16,7 @@ public abstract class Problem {
     public Problem(int numDimensions, double Vmax) {
         this.numDimensions = numDimensions;
         constraints = new Double[numDimensions][2];
-        this.Vmax = Vmax / 2;
+        this.Vmax = Vmax / 4;
     }
 
     //Abstract methods

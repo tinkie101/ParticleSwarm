@@ -8,7 +8,7 @@ public class HyperEllipsoid extends Problem {
 
     //Hard code the problem function parameters
     public HyperEllipsoid(int Nx) {
-        super(Nx, 0.05d);
+        super(Nx, 1.0d);
         this.Nx = Nx;
 
         for (int i = 0; i < Nx; i++) {

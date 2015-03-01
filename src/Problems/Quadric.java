@@ -8,7 +8,7 @@ public class Quadric extends Problem {
 
     //Hard code the problem function parameters
     public Quadric(int Nx) {
-        super(Nx, 50.0d);
+        super(Nx, 100.0d);
         this.Nx = Nx;
 
         for (int i = 0; i < Nx; i++) {
