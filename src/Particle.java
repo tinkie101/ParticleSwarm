@@ -91,7 +91,7 @@ public class Particle {
 //                }
 //                break;
 //
-//                /**Reset all to 0*/
+//                /**Reset all to random*/
 //                for (int v = 0; v < velocity.length; v++) {
 //                    velocity[v] = RandomGenerator.getInstance().getRandomRangedDoubleValue(-Vmax, Vmax);
 //                }
@@ -112,6 +112,16 @@ public class Particle {
         result = Math.sqrt(result);
 
         return result;
+    }
+
+    public boolean isInSearchSpace() {
+        for (int i = 0; i < position.length; i++) {
+            //Particle is outside search space
+            if (position[i] < constraints[i][0] || position[i] > constraints[i][1]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void updatePosition() throws Exception {

@@ -47,13 +47,13 @@ public class GBest extends PSO {
                 double pBestFitness = particle.getPBestValue();
 
                 if (minimisation) {
-                    if (pBestFitness > newFitness) {
+                    if (particle.isInSearchSpace() && pBestFitness > newFitness) {
                         particle.setPBestPosition(position);
                         particle.setPBestValue(newFitness);
                     }
                 } else //maximization
                 {
-                    if (pBestFitness < newFitness) {
+                    if (particle.isInSearchSpace() && pBestFitness < newFitness) {
                         particle.setPBestPosition(position);
                         particle.setPBestValue(newFitness);
                     }
@@ -80,6 +80,7 @@ public class GBest extends PSO {
                 //  4) update particle position
                 swarm[i].updatePosition();
             }
+
 
             stringBuilder.append("PSO run: " + count + "\n");
             stringBuilder.append("Best solution vector[" + gBest + "]: " + swarm[gBest].toString() + "; Fitness: " + swarm[gBest].getPBestValue() + "\n");

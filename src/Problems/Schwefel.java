@@ -26,8 +26,9 @@ public class Schwefel extends Problem {
             Double result = 0.0d;
             //Calculate the result of the function when you plug in the variables
             for (int j = 0; j < Nx; j++) {
-                result += x[j] * Math.sin(Math.sqrt(Math.abs(x[j]))) + (418.9829d * Nx);
+                result += x[j] * Math.sin(Math.sqrt(Math.abs(x[j])));
             }
+            result += (418.9829d * Nx);
 
             return result;
         } else
