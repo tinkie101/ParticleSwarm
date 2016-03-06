@@ -6,8 +6,11 @@ import Problems.Problem;
 public class GBest extends PSO {
 
     int gBest;
+    double overallGBestVal;
+    Double[] overallGBest;
+
     boolean first = true;
-    StringBuilder stringBuilder = new StringBuilder();
+    int NUM_EPOCHS = 1000;
 
     public GBest(boolean minimisation, Problem problem, int numParticles) throws Exception {
         //create PSO
@@ -27,18 +30,19 @@ public class GBest extends PSO {
                 }
             }
         }
+
+        overallGBestVal = swarm[gBest].getPBestValue();
+        overallGBest = swarm[gBest].getPBestPosition();
     }
 
 
     @Override
-    public void runPSO() throws Exception {
-        stringBuilder.append("Starting PSO: \nConstraints: ");
-
+    public double runPSO() throws Exception {
         Double[][] constraints = problem.getConstraints();
 
         //TODO Stopping condition
         int count = 0;
-        while (count < 1000) {
+        while (count < NUM_EPOCHS) {
             //  1) set each particle's best pBest
             for (int i = 0; i < numParticles; i++) {
                 Particle particle = swarm[i];
@@ -58,40 +62,60 @@ public class GBest extends PSO {
                         particle.setPBestValue(newFitness);
                     }
                 }
+            }
 
-                //  2) update gBest
+            //  2) update gBest
+            double gBestVal = swarm[gBest].getPBestValue();
+            int gBestPos = gBest;
+
+            for (int i = 0; i < numParticles; i++) {
+                Particle particle = swarm[i];
+                Double[] position = particle.getPosition();
+                double newFitness = problem.calculateFitness(position);
+
                 if (minimisation) {
                     if (swarm[gBest].getPBestValue() > newFitness) {
-                        gBest = i;
+                        gBestPos = i;
                     }
                 } else //maximization
                 {
                     if (swarm[gBest].getPBestValue() < newFitness) {
-                        gBest = i;
+                        gBestPos = i;
                     }
                 }
             }
+            gBest = gBestPos;
+
+            // 2.1 update overall gBest
+            if (minimisation) {
+                if (swarm[gBest].getPBestValue() < overallGBestVal) {
+                    overallGBestVal = swarm[gBest].getPBestValue();
+                    overallGBest = swarm[gBest].getPBestPosition();
+                }
+            } else //maximization
+            {
+                if (swarm[gBest].getPBestValue() > overallGBestVal) {
+                    overallGBestVal = swarm[gBest].getPBestValue();
+                    overallGBest = swarm[gBest].getPBestPosition();
+                }
+            }
+
 
             for (int i = 0; i < numParticles; i++) {
-
                 //  3) Update particle velocity
-                swarm[i].updateVelocity(swarm[gBest].getPBestPosition());
+                swarm[i].updateVelocity(swarm[gBest].getPBestPosition(), overallGBest, count, NUM_EPOCHS);
 
                 //  4) update particle position
                 swarm[i].updatePosition();
             }
-
-
-            stringBuilder.append("PSO run: " + count + "\n");
-            stringBuilder.append("Best solution vector[" + gBest + "]: " + swarm[gBest].toString() + "; Fitness: " + swarm[gBest].getPBestValue() + "\n");
             count++;
+
+            if(count == NUM_EPOCHS)
+                stringBuilder.append(swarm[gBest].getPBestValue() + "\n");
+            else
+                stringBuilder.append(swarm[gBest].getPBestValue() + ", ");
         }
-
-        stringBuilder.append("PSO Finished" + "\n");
-        stringBuilder.append("Final Best solution vector: " + swarm[gBest].toString() + "; Fitness: " + swarm[gBest].getPBestValue() + "\n");
-
-        FileHandler.writeFile("files/" + problem.getClass().toString() + ".txt", stringBuilder.toString());
-//        System.out.print(stringBuilder.toString());
+        return swarm[gBest].getPBestValue();
     }
 
 

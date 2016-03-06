@@ -10,6 +10,7 @@ abstract class PSO {
     Particle[] swarm;
     Problem problem;
     boolean minimisation;
+    public StringBuilder stringBuilder = new StringBuilder();
 
     //  1) initialize n-dimensional swarm
     public PSO(boolean minimisation, Problem problem, int numParticles) throws Exception {
@@ -35,5 +36,5 @@ abstract class PSO {
     }
 
     //  2) run PSO
-    public abstract void runPSO() throws Exception;
+    public abstract double runPSO() throws Exception;
 }
